@@ -1,0 +1,10 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     convolve
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003898, symSize: 0x198 }
+  - { offsetInCU: 0x2D6, offset: 0x2D6, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003898, symSize: 0x198 }
+  - { offsetInCU: 0x394, offset: 0x394, size: 0x8, addend: 0x0, symName: __Z13read_wav_fileP7__sFILEP7WavFilePfPi, symObjAddr: 0x198, symBinAddr: 0x100003A30, symSize: 0x204 }
+  - { offsetInCU: 0x410, offset: 0x410, size: 0x8, addend: 0x0, symName: __Z12print_vectorPcPfi, symObjAddr: 0x39C, symBinAddr: 0x100003C34, symSize: 0xBC }
+  - { offsetInCU: 0x462, offset: 0x462, size: 0x8, addend: 0x0, symName: __Z8convolvePfiS_iS_i, symObjAddr: 0x458, symBinAddr: 0x100003CF0, symSize: 0x17C }
+...
