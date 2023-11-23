@@ -39,13 +39,13 @@ std::vector<float> convolve(const std::vector<float> &x,
 }
 
 std::vector<float> readWAV(const char *filename) {
+  std::cout << "Reading WAV file: " << filename << std::endl;
   std::ifstream file(filename, std::ios::binary);
   if (!file.is_open()) {
-    std::cerr << "Error opening file!" << std::endl;
+    std::cerr << "Error opening file: " << filename << std::endl;
   }
 
   WAVHeader header;
-  std::cout << "Reading WAV file: " << filename << std::endl;
   file.read(reinterpret_cast<char *>(&header), sizeof(WAVHeader));
   std::vector<float> inputSignal(header.subchunk2Size /
                                  (header.bitsPerSample / 8));
@@ -64,6 +64,12 @@ void writeWAV(const char *filename, std::vector<float> outputSignal) {
   std::ofstream file(filename, std::ios::binary);
   if (!file.is_open()) {
     std::cerr << "Error opening file: " << filename << std::endl;
+  }
+
+  float scalingFactor = 32768.0f;
+  std::vector<int16_t> scaledOutput(outputSignal.size());
+  for (size_t i = 0; i < outputSignal.size(); i++) {
+    scaledOutput[i] = static_cast<int16_t>(outputSignal[i] * scalingFactor);
   }
 
   WAVHeader header;
