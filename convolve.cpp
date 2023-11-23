@@ -7,7 +7,7 @@ struct WAVHeader {
   uint32_t chunkSize;
   char format[4];
   char subchunk1ID[4];
-  char subchunk1Size;
+  uint32_t subchunk1Size;
   uint16_t audioFormat;
   uint16_t numChannels;
   uint32_t sampleRate;
@@ -15,7 +15,7 @@ struct WAVHeader {
   uint16_t blockAlign;
   uint16_t bitsPerSample;
   char subchunk2ID[4];
-  int subchunk2Size;
+  uint32_t subchunk2Size;
 };
 
 std::vector<float> convolve(const std::vector<float> &x,
@@ -67,6 +67,18 @@ void writeWAV(const char *filename, std::vector<float> outputSignal) {
   }
 
   WAVHeader header;
+  std::strcpy(header.chunkID, "RIFF");
+  header.chunkSize =
+      sizeof(WAVHeader) + outputSignal.size() * sizeof(float) - 8;
+  std::strcpy(header.format, "WAVE");
+  std::strcpy(header.subchunk1ID, "fmt ");
+  header.subchunk1Size = 16;
+  header.audioFormat = 1;
+  header.numChannels = 1;
+  header.sampleRate = 44100;
+  header.bitsPerSample = 16;
+  std::strcpy(header.subchunk2ID, "data");
+  header.subchunk2Size = outputSignal.size() * sizeof(float);
   file.write(reinterpret_cast<const char *>(&header), sizeof(WAVHeader));
   file.write(reinterpret_cast<const char *>(outputSignal.data()),
              outputSignal.size());
