@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iostream>
 #include <vector>
 
@@ -14,7 +13,12 @@ typedef struct {
   int byteRate;
   short blockAlign;
   short bitsPerSample;
-} WAVHeader;
+} WavHeader;
+
+typedef struct {
+  char subchunk2ID[4];
+  int subchunk2Size;
+} WavData;
 
 std::vector<float> convolve(const std::vector<float> &x,
                             const std::vector<float> &h) {
@@ -36,72 +40,117 @@ std::vector<float> convolve(const std::vector<float> &x,
   return y;
 }
 
-std::vector<float> readWAV(const char *filename) {
+void printWavHeader(WavHeader header) {
+  std::cout << header.chunkID << std::endl;
+  std::cout << header.chunkSize << std::endl;
+  std::cout << header.format << std::endl;
+  std::cout << header.subchunk1ID << std::endl;
+  std::cout << header.subchunk1Size << std::endl;
+  std::cout << header.audioFormat << std::endl;
+  std::cout << header.numChannels << std::endl;
+  std::cout << header.sampleRate << std::endl;
+  std::cout << header.byteRate << std::endl;
+  std::cout << header.blockAlign << std::endl;
+  std::cout << header.bitsPerSample << std::endl;
+}
+
+void printWavData(WavData data) {
+  std::cout << data.subchunk2ID << std::endl;
+  std::cout << data.subchunk2Size << std::endl;
+}
+
+std::vector<float> readWav(const char *filename) {
   std::cout << "Reading WAV file: " << filename << std::endl;
-  std::ifstream file(filename, std::ios::binary);
-  if (!file.is_open()) {
-    std::cerr << "Error opening file: " << filename << std::endl;
+  FILE *file = fopen(filename, "rb");
+
+  WavHeader header;
+  WavData data;
+
+  fread(&header, sizeof(header), 1, file);
+
+  if (header.subchunk1Size != 16) {
+    int rem = header.subchunk1Size - 16;
+    char nullBytes[rem];
+    fread(nullBytes, rem, 1, file);
   }
 
-  WAVHeader header;
-  file.read(reinterpret_cast<char *>(&header), sizeof(WAVHeader));
-  char subchunk2ID[4];
-  int subchunk2Size;
-  file.read(reinterpret_cast<char *>(&subchunk2ID), sizeof(subchunk2ID));
-  file.read(reinterpret_cast<char *>(&subchunk2Size), sizeof(subchunk2Size));
+  printWavHeader(header);
 
-  std::vector<float> inputSignal(subchunk2Size / (header.bitsPerSample / 8));
-  file.read(reinterpret_cast<char *>(inputSignal.data()), subchunk2Size);
+  fread(&data, sizeof(data), 1, file);
 
-  float scalingFactor = 1.0f / 32768.0f;
+  int numSamples = data.subchunk2Size / (header.bitsPerSample / 8);
+  size_t dataSize = data.subchunk2Size;
+  std::vector<short> audioData(numSamples);
+  fread(audioData.data(), sizeof(short), numSamples, file);
+
+  printWavData(data);
+  std::cout << "numSamples: " << numSamples << std::endl;
+
+  std::vector<float> inputSignal(numSamples);
+
   for (size_t i = 0; i < inputSignal.size(); i++) {
-    inputSignal[i] *= scalingFactor;
+    inputSignal[i] = static_cast<float>(audioData[i]) / 32768.0f;
   }
 
-  file.close();
+  fclose(file);
 
   return inputSignal;
 }
 
-void writeWAV(const char *filename, std::vector<float> outputSignal) {
+size_t fwriteIntLSB(int data, FILE *stream) {
+  unsigned char array[4];
+
+  array[3] = (unsigned char)((data >> 24) & 0xFF);
+  array[2] = (unsigned char)((data >> 16) & 0xFF);
+  array[1] = (unsigned char)((data >> 8) & 0xFF);
+  array[0] = (unsigned char)(data & 0xFF);
+  return fwrite(array, sizeof(unsigned char), 4, stream);
+}
+
+size_t fwriteShortLSB(short int data, FILE *stream) {
+  unsigned char array[2];
+
+  array[1] = (unsigned char)((data >> 8) & 0xFF);
+  array[0] = (unsigned char)(data & 0xFF);
+  return fwrite(array, sizeof(unsigned char), 2, stream);
+}
+
+void writeWav(const char *filename, std::vector<float> outputSignal) {
   std::cout << "Writing output signal to: " << filename << std::endl;
-  std::ofstream file(filename, std::ios::binary);
-  if (!file.is_open()) {
-    std::cerr << "Error opening file: " << filename << std::endl;
-  }
+  FILE *file = fopen(filename, "wb");
 
-  float scalingFactor = 32768.0f;
-  std::vector<short> scaledOutput(outputSignal.size());
-  for (size_t i = 0; i < outputSignal.size(); i++) {
-    scaledOutput[i] = static_cast<short>(outputSignal[i] * scalingFactor);
-  }
-
-  WAVHeader header;
-  memcpy(header.chunkID, "RIFF", 4);
+  WavHeader header;
+  memcpy(header.chunkID, "RIFF", sizeof(int));
   header.chunkSize =
-      sizeof(WAVHeader) + outputSignal.size() * sizeof(float) - 8;
-  memcpy(header.format, "WAVE", 4);
-  memcpy(header.subchunk1ID, "fmt ", 4);
+      sizeof(WavHeader) + sizeof(WavData) + outputSignal.size() * sizeof(short);
+  memcpy(header.format, "WAVE", sizeof(int));
+  memcpy(header.subchunk1ID, "fmt ", sizeof(int));
   header.subchunk1Size = 16;
   header.audioFormat = 1;
   header.numChannels = 1;
   header.sampleRate = 44100;
   header.bitsPerSample = 16;
 
-  file.write(reinterpret_cast<const char *>(&header), sizeof(WAVHeader));
-  file.write("data", 4);
-  int subchunk2Size = outputSignal.size() * sizeof(float);
-  file.write(reinterpret_cast<const char *>(&subchunk2Size), sizeof(int));
-  file.write(reinterpret_cast<const char *>(outputSignal.data()),
-             outputSignal.size() * sizeof(float));
+  fwrite(&header, sizeof(WavHeader), 1, file);
+  fwrite("data", sizeof(int), 1, file);
 
-  file.close();
-}
+  printWavHeader(header);
 
-void printVector(const char *title, const std::vector<float> &x) {
-  for (size_t i = 0; i < x.size(); i++) {
-    std::cout << i << "\t\t" << x[i] << std::endl;
+  int subchunk2Size = outputSignal.size() * sizeof(short);
+  WavData data;
+  memcpy(data.subchunk2ID, "data", sizeof(int));
+  memcpy(&data.subchunk2Size, &subchunk2Size, sizeof(int));
+  fwrite(&data, sizeof(data), 1, file);
+
+  printWavData(data);
+
+  std::vector<short> audioData(outputSignal.size());
+  for (size_t i = 0; i < outputSignal.size(); ++i) {
+    audioData[i] = static_cast<short>(outputSignal[i] * 32767.0f);
   }
+  fwrite(audioData.data(), sizeof(short), audioData.size(), file);
+
+  fclose(file);
 }
 
 int main(int argc, char *argv[]) {
@@ -118,8 +167,8 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  inputSignal = readWAV(argv[1]);
-  impulseResponse = readWAV(argv[2]);
+  inputSignal = readWav(argv[1]);
+  impulseResponse = readWav(argv[2]);
 
   if (inputSignal.empty() || impulseResponse.empty()) {
     std::cerr << "Error: inputfile or impulse response is empty" << std::endl;
@@ -127,7 +176,7 @@ int main(int argc, char *argv[]) {
   }
 
   outputSignal = convolve(inputSignal, impulseResponse);
-  writeWAV(argv[3], outputSignal);
+  writeWav(argv[3], outputSignal);
 
   return 0;
 }
