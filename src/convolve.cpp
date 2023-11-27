@@ -2,21 +2,19 @@
 #include <iostream>
 #include <vector>
 
-struct WAVHeader {
+typedef struct {
   char chunkID[4];
-  uint32_t chunkSize;
+  int chunkSize;
   char format[4];
   char subchunk1ID[4];
-  uint32_t subchunk1Size;
-  uint16_t audioFormat;
-  uint16_t numChannels;
-  uint32_t sampleRate;
-  uint32_t byteRate;
-  uint16_t blockAlign;
-  uint16_t bitsPerSample;
-  char subchunk2ID[4];
-  uint32_t subchunk2Size;
-};
+  int subchunk1Size;
+  short audioFormat;
+  short numChannels;
+  int sampleRate;
+  int byteRate;
+  short blockAlign;
+  short bitsPerSample;
+} WAVHeader;
 
 std::vector<float> convolve(const std::vector<float> &x,
                             const std::vector<float> &h) {
@@ -47,13 +45,19 @@ std::vector<float> readWAV(const char *filename) {
 
   WAVHeader header;
   file.read(reinterpret_cast<char *>(&header), sizeof(WAVHeader));
-  std::vector<float> inputSignal(header.subchunk2Size /
-                                 (header.bitsPerSample / 8));
-  file.read(reinterpret_cast<char *>(inputSignal.data()), header.subchunk2Size);
+  char subchunk2ID[4];
+  int subchunk2Size;
+  file.read(reinterpret_cast<char *>(&subchunk2ID), sizeof(subchunk2ID));
+  file.read(reinterpret_cast<char *>(&subchunk2Size), sizeof(subchunk2Size));
+
+  std::vector<float> inputSignal(subchunk2Size / (header.bitsPerSample / 8));
+  file.read(reinterpret_cast<char *>(inputSignal.data()), subchunk2Size);
+
   float scalingFactor = 1.0f / 32768.0f;
   for (size_t i = 0; i < inputSignal.size(); i++) {
     inputSignal[i] *= scalingFactor;
   }
+
   file.close();
 
   return inputSignal;
@@ -67,27 +71,30 @@ void writeWAV(const char *filename, std::vector<float> outputSignal) {
   }
 
   float scalingFactor = 32768.0f;
-  std::vector<int16_t> scaledOutput(outputSignal.size());
+  std::vector<short> scaledOutput(outputSignal.size());
   for (size_t i = 0; i < outputSignal.size(); i++) {
-    scaledOutput[i] = static_cast<int16_t>(outputSignal[i] * scalingFactor);
+    scaledOutput[i] = static_cast<short>(outputSignal[i] * scalingFactor);
   }
 
   WAVHeader header;
-  std::strcpy(header.chunkID, "RIFF");
+  memcpy(header.chunkID, "RIFF", 4);
   header.chunkSize =
       sizeof(WAVHeader) + outputSignal.size() * sizeof(float) - 8;
-  std::strcpy(header.format, "WAVE");
-  std::strcpy(header.subchunk1ID, "fmt ");
+  memcpy(header.format, "WAVE", 4);
+  memcpy(header.subchunk1ID, "fmt ", 4);
   header.subchunk1Size = 16;
   header.audioFormat = 1;
   header.numChannels = 1;
   header.sampleRate = 44100;
   header.bitsPerSample = 16;
-  std::strcpy(header.subchunk2ID, "data");
-  header.subchunk2Size = outputSignal.size() * sizeof(float);
+
   file.write(reinterpret_cast<const char *>(&header), sizeof(WAVHeader));
+  file.write("data", 4);
+  int subchunk2Size = outputSignal.size() * sizeof(float);
+  file.write(reinterpret_cast<const char *>(&subchunk2Size), sizeof(int));
   file.write(reinterpret_cast<const char *>(outputSignal.data()),
-             outputSignal.size());
+             outputSignal.size() * sizeof(float));
+
   file.close();
 }
 
