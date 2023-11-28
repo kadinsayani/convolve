@@ -16,5 +16,8 @@ set(SOURCES
     tests.cpp
 )
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/guitar_short.wav
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(tests ${SOURCES})
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
