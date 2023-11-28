@@ -59,18 +59,12 @@ public:
       fread(nullBytes, rem, 1, file);
     }
 
-    header.print();
-
     fread(&data, sizeof(data), 1, file);
 
     int numSamples = data.subchunk2Size / (header.bitsPerSample / 8);
     std::vector<short> audio(numSamples);
     fread(audio.data(), sizeof(short), numSamples, file);
-
     audioData.resize(numSamples);
-
-    data.print();
-    std::cout << "numSamples: " << numSamples << std::endl;
 
     for (size_t i = 0; i < numSamples; i++) {
       audioData[i] = static_cast<float>(audio[i]) / 32768.0f;
@@ -104,10 +98,14 @@ public:
     int numSamples = data.subchunk2Size / (header.bitsPerSample / 8);
     std::vector<short> outputAudioData(numSamples);
 
+    float maxVal = *std::max_element(audioData.begin(), audioData.end());
+    float minVal = *std::min_element(audioData.begin(), audioData.end());
+    float range = maxVal - minVal;
     for (size_t i = 0; i < numSamples; i++) {
+      audioData[i] = (audioData[i] - minVal) / range;
       float scaledValue = audioData[i] * 32767.0f;
-      outputAudioData[i] = static_cast<short>(
-          std::max(-32768.0f, std::min(scaledValue, 32767.0f)));
+      scaledValue = std::max(-32768.0f, std::min(scaledValue, 32767.0f));
+      outputAudioData[i] = static_cast<short>(scaledValue);
     }
 
     fwrite(outputAudioData.data(), sizeof(short), numSamples, file);
