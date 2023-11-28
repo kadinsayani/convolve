@@ -6,7 +6,7 @@
 
 using namespace Convolve;
 
-TEST_CASE("Convolve Function Test", "[convolve]") {
+TEST_CASE("Convolve function test", "[convolve]") {
   Convolver convolver;
   std::vector<float> x = {1.0, 2.0, 3.0};
   std::vector<float> h = {0.5, 0.5};
