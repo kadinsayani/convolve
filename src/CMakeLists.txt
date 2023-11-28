@@ -1,5 +1,9 @@
 set(SOURCES
-    convolve.cpp
+    Convolver.cpp
+    WavData.cpp 
+    WavFile.cpp 
+    WavHeader.cpp
+    main.cpp
 )
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/big_hall_mono.wav

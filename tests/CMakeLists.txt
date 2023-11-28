@@ -9,6 +9,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 
 set(SOURCES
+    ../src/Convolver.cpp 
+    ../src/WavData.cpp
+    ../src/WavFile.cpp
+    ../src/WavHeader.cpp
     tests.cpp
 )
 
