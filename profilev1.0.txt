@@ -1,0 +1,122 @@
+Weight	Self Weight		Symbol Name
+13.78 min  100.0%	0 s	 	convolve (49891)
+13.78 min  100.0%	0 s	 	 Main Thread  0x444568
+13.78 min   99.9%	0 s	 	  start
+13.78 min   99.9%	0 s	 	   main
+13.78 min   99.9%	7.07 min	 	    Convolve::Convolver::convolve(std::__1::vector<float, std::__1::allocator<float>> const&, std::__1::vector<float, std::__1::allocator<float>> const&)
+3.46 min   25.1%	3.46 min	 	     std::__1::vector<float, std::__1::allocator<float>>::operator[][abi:v160006](unsigned long) const
+1.75 min   12.7%	1.75 min	 	     std::__1::vector<float, std::__1::allocator<float>>::size[abi:v160006]() const
+1.50 min   10.8%	1.50 min	 	     std::__1::vector<float, std::__1::allocator<float>>::operator[][abi:v160006](unsigned long)
+12.00 ms    0.0%	0 s	 	     std::__1::vector<float, std::__1::allocator<float>>::vector(unsigned long, float const&)
+12.00 ms    0.0%	0 s	 	      std::__1::vector<float, std::__1::allocator<float>>::vector(unsigned long, float const&)
+12.00 ms    0.0%	5.00 ms	 	       std::__1::vector<float, std::__1::allocator<float>>::__construct_at_end(unsigned long, float const&)
+4.00 ms    0.0%	3.00 ms	 	        void std::__1::allocator_traits<std::__1::allocator<float>>::construct[abi:v160006]<float, float const&, void>(std::__1::allocator<float>&, float*, float const&)
+1.00 ms    0.0%	1.00 ms	 	         void std::__1::allocator<float>::construct[abi:v160006]<float, float const&>(float*, float const&)
+3.00 ms    0.0%	2.00 ms	 	        std::__1::vector<float, std::__1::allocator<float>>::__alloc[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	         std::__1::__compressed_pair<float*, std::__1::allocator<float>>::second[abi:v160006]()
+76.00 ms    0.0%	14.00 ms	 	    Convolve::WavFile::write(char const*)
+18.00 ms    0.0%	0 s	 	     std::__1::__wrap_iter<float*> std::__1::min_element[abi:v160006]<std::__1::__wrap_iter<float*>>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>)
+18.00 ms    0.0%	0 s	 	      std::__1::__wrap_iter<float*> std::__1::min_element[abi:v160006]<std::__1::__wrap_iter<float*>, std::__1::__less<float, float>>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>, std::__1::__less<float, float>)
+18.00 ms    0.0%	0 s	 	       std::__1::__wrap_iter<float*> std::__1::__min_element[abi:v160006]<std::__1::__less<float, float>&, std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>, std::__1::__less<float, float>&)
+18.00 ms    0.0%	3.00 ms	 	        std::__1::__wrap_iter<float*> std::__1::__min_element[abi:v160006]<std::__1::__less<float, float>&, std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>, std::__1::__identity>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>, std::__1::__less<float, float>&, std::__1::__identity&)
+6.00 ms    0.0%	2.00 ms	 	         bool std::__1::operator!=[abi:v160006]<float*>(std::__1::__wrap_iter<float*> const&, std::__1::__wrap_iter<float*> const&)
+4.00 ms    0.0%	2.00 ms	 	          bool std::__1::operator==[abi:v160006]<float*>(std::__1::__wrap_iter<float*> const&, std::__1::__wrap_iter<float*> const&)
+2.00 ms    0.0%	2.00 ms	 	           std::__1::__wrap_iter<float*>::base[abi:v160006]() const
+4.00 ms    0.0%	2.00 ms	 	         decltype(std::declval<std::__1::__identity&>()(std::declval<float&>())) std::__1::__invoke[abi:v160006]<std::__1::__identity&, float&>(std::__1::__identity&, float&)
+2.00 ms    0.0%	2.00 ms	 	          float& std::__1::__identity::operator()<float&>(float&) const
+4.00 ms    0.0%	2.00 ms	 	         decltype(std::declval<std::__1::__less<float, float>&>()(std::declval<float&>(), std::declval<float&>())) std::__1::__invoke[abi:v160006]<std::__1::__less<float, float>&, float&, float&>(std::__1::__less<float, float>&, float&, float&)
+2.00 ms    0.0%	2.00 ms	 	          std::__1::__less<float, float>::operator()[abi:v160006](float const&, float const&) const
+1.00 ms    0.0%	1.00 ms	 	         std::__1::__wrap_iter<float*>::operator*[abi:v160006]() const
+13.00 ms    0.0%	0 s	 	     std::__1::__wrap_iter<float*> std::__1::max_element[abi:v160006]<std::__1::__wrap_iter<float*>>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>)
+13.00 ms    0.0%	0 s	 	      std::__1::__wrap_iter<float*> std::__1::max_element[abi:v160006]<std::__1::__wrap_iter<float*>, std::__1::__less<float, float>>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>, std::__1::__less<float, float>)
+13.00 ms    0.0%	5.00 ms	 	       std::__1::__wrap_iter<float*> std::__1::__max_element[abi:v160006]<std::__1::__less<float, float>&, std::__1::__wrap_iter<float*>>(std::__1::__wrap_iter<float*>, std::__1::__wrap_iter<float*>, std::__1::__less<float, float>&)
+7.00 ms    0.0%	1.00 ms	 	        bool std::__1::operator!=[abi:v160006]<float*>(std::__1::__wrap_iter<float*> const&, std::__1::__wrap_iter<float*> const&)
+6.00 ms    0.0%	4.00 ms	 	         bool std::__1::operator==[abi:v160006]<float*>(std::__1::__wrap_iter<float*> const&, std::__1::__wrap_iter<float*> const&)
+2.00 ms    0.0%	2.00 ms	 	          std::__1::__wrap_iter<float*>::base[abi:v160006]() const
+1.00 ms    0.0%	1.00 ms	 	        std::__1::__less<float, float>::operator()[abi:v160006](float const&, float const&) const
+11.00 ms    0.0%	0 s	 	     std::__1::vector<short, std::__1::allocator<short>>::vector(unsigned long)
+11.00 ms    0.0%	0 s	 	      std::__1::vector<short, std::__1::allocator<short>>::vector(unsigned long)
+11.00 ms    0.0%	3.00 ms	 	       std::__1::vector<short, std::__1::allocator<short>>::__construct_at_end(unsigned long)
+5.00 ms    0.0%	2.00 ms	 	        std::__1::vector<short, std::__1::allocator<short>>::__alloc[abi:v160006]()
+3.00 ms    0.0%	2.00 ms	 	         std::__1::__compressed_pair<short*, std::__1::allocator<short>>::second[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	          std::__1::__compressed_pair_elem<std::__1::allocator<short>, 1, true>::__get[abi:v160006]()
+3.00 ms    0.0%	0 s	 	        void std::__1::allocator_traits<std::__1::allocator<short>>::construct[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+2.00 ms    0.0%	2.00 ms	 	         void std::__1::allocator<short>::construct[abi:v160006]<short>(short*)
+1.00 ms    0.0%	1.00 ms	 	         DYLD-STUB$$void std::__1::allocator<short>::construct[abi:v160006]<short>(short*)
+10.00 ms    0.0%	0 s	 	     std::__1::vector<short, std::__1::allocator<short>>::~vector[abi:v160006]()
+10.00 ms    0.0%	0 s	 	      std::__1::vector<short, std::__1::allocator<short>>::~vector[abi:v160006]()
+10.00 ms    0.0%	0 s	 	       std::__1::vector<short, std::__1::allocator<short>>::__destroy_vector::operator()[abi:v160006]()
+10.00 ms    0.0%	0 s	 	        std::__1::vector<short, std::__1::allocator<short>>::__clear[abi:v160006]()
+10.00 ms    0.0%	2.00 ms	 	         std::__1::vector<short, std::__1::allocator<short>>::__base_destruct_at_end[abi:v160006](short*)
+4.00 ms    0.0%	1.00 ms	 	          std::__1::vector<short, std::__1::allocator<short>>::__alloc[abi:v160006]()
+3.00 ms    0.0%	2.00 ms	 	           std::__1::__compressed_pair<short*, std::__1::allocator<short>>::second[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	            std::__1::__compressed_pair_elem<std::__1::allocator<short>, 1, true>::__get[abi:v160006]()
+2.00 ms    0.0%	1.00 ms	 	          void std::__1::allocator_traits<std::__1::allocator<short>>::destroy[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+1.00 ms    0.0%	1.00 ms	 	           std::__1::allocator<short>::destroy[abi:v160006](short*)
+1.00 ms    0.0%	1.00 ms	 	          short* std::__1::__to_address[abi:v160006]<short>(short*)
+1.00 ms    0.0%	1.00 ms	 	          DYLD-STUB$$void std::__1::allocator_traits<std::__1::allocator<short>>::destroy[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+6.00 ms    0.0%	4.00 ms	 	     float const& std::__1::min[abi:v160006]<float>(float const&, float const&)
+2.00 ms    0.0%	2.00 ms	 	      float const& std::__1::min[abi:v160006]<float, std::__1::__less<float, float>>(float const&, float const&, std::__1::__less<float, float>)
+2.00 ms    0.0%	1.00 ms	 	     float const& std::__1::max[abi:v160006]<float>(float const&, float const&)
+1.00 ms    0.0%	0 s	 	      float const& std::__1::max[abi:v160006]<float, std::__1::__less<float, float>>(float const&, float const&, std::__1::__less<float, float>)
+1.00 ms    0.0%	1.00 ms	 	       std::__1::__less<float, float>::operator()[abi:v160006](float const&, float const&) const
+1.00 ms    0.0%	0 s	 	     fclose
+1.00 ms    0.0%	1.00 ms	 	      __close_nocancel
+1.00 ms    0.0%	1.00 ms	 	     std::__1::vector<float, std::__1::allocator<float>>::operator[][abi:v160006](unsigned long)
+39.00 ms    0.0%	3.00 ms	 	    Convolve::WavFile::read(char const*)
+12.00 ms    0.0%	0 s	 	     std::__1::vector<float, std::__1::allocator<float>>::resize(unsigned long)
+12.00 ms    0.0%	0 s	 	      std::__1::vector<float, std::__1::allocator<float>>::__append(unsigned long)
+12.00 ms    0.0%	7.00 ms	 	       std::__1::__split_buffer<float, std::__1::allocator<float>&>::__construct_at_end(unsigned long)
+2.00 ms    0.0%	2.00 ms	 	        float* std::__1::__to_address[abi:v160006]<float>(float*)
+2.00 ms    0.0%	0 s	 	        std::__1::__split_buffer<float, std::__1::allocator<float>&>::__alloc[abi:v160006]()
+2.00 ms    0.0%	1.00 ms	 	         std::__1::__compressed_pair<float*, std::__1::allocator<float>&>::second[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	          std::__1::__compressed_pair_elem<std::__1::allocator<float>&, 1, false>::__get[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	        DYLD-STUB$$void std::__1::allocator_traits<std::__1::allocator<float>>::construct[abi:v160006]<float, void>(std::__1::allocator<float>&, float*)
+12.00 ms    0.0%	0 s	 	     std::__1::vector<short, std::__1::allocator<short>>::vector(unsigned long)
+12.00 ms    0.0%	0 s	 	      std::__1::vector<short, std::__1::allocator<short>>::vector(unsigned long)
+12.00 ms    0.0%	4.00 ms	 	       std::__1::vector<short, std::__1::allocator<short>>::__construct_at_end(unsigned long)
+4.00 ms    0.0%	2.00 ms	 	        void std::__1::allocator_traits<std::__1::allocator<short>>::construct[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+1.00 ms    0.0%	1.00 ms	 	         void std::__1::allocator<short>::construct[abi:v160006]<short>(short*)
+1.00 ms    0.0%	1.00 ms	 	         DYLD-STUB$$void std::__1::allocator<short>::construct[abi:v160006]<short>(short*)
+3.00 ms    0.0%	1.00 ms	 	        std::__1::vector<short, std::__1::allocator<short>>::__alloc[abi:v160006]()
+2.00 ms    0.0%	1.00 ms	 	         std::__1::__compressed_pair<short*, std::__1::allocator<short>>::second[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	          std::__1::__compressed_pair_elem<std::__1::allocator<short>, 1, true>::__get[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	        DYLD-STUB$$void std::__1::allocator_traits<std::__1::allocator<short>>::construct[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+10.00 ms    0.0%	0 s	 	     std::__1::vector<short, std::__1::allocator<short>>::~vector[abi:v160006]()
+10.00 ms    0.0%	0 s	 	      std::__1::vector<short, std::__1::allocator<short>>::~vector[abi:v160006]()
+10.00 ms    0.0%	0 s	 	       std::__1::vector<short, std::__1::allocator<short>>::__destroy_vector::operator()[abi:v160006]()
+10.00 ms    0.0%	0 s	 	        std::__1::vector<short, std::__1::allocator<short>>::__clear[abi:v160006]()
+10.00 ms    0.0%	3.00 ms	 	         std::__1::vector<short, std::__1::allocator<short>>::__base_destruct_at_end[abi:v160006](short*)
+5.00 ms    0.0%	2.00 ms	 	          std::__1::vector<short, std::__1::allocator<short>>::__alloc[abi:v160006]()
+3.00 ms    0.0%	2.00 ms	 	           std::__1::__compressed_pair<short*, std::__1::allocator<short>>::second[abi:v160006]()
+1.00 ms    0.0%	1.00 ms	 	            std::__1::__compressed_pair_elem<std::__1::allocator<short>, 1, true>::__get[abi:v160006]()
+1.00 ms    0.0%	0 s	 	          void std::__1::allocator_traits<std::__1::allocator<short>>::destroy[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+1.00 ms    0.0%	1.00 ms	 	           std::__1::allocator<short>::destroy[abi:v160006](short*)
+1.00 ms    0.0%	1.00 ms	 	          DYLD-STUB$$void std::__1::allocator_traits<std::__1::allocator<short>>::destroy[abi:v160006]<short, void>(std::__1::allocator<short>&, short*)
+2.00 ms    0.0%	2.00 ms	 	     std::__1::vector<float, std::__1::allocator<float>>::operator[][abi:v160006](unsigned long)
+9.00 ms    0.0%	0 s	 	    Convolve::WavFile::~WavFile()
+9.00 ms    0.0%	0 s	 	     Convolve::WavFile::~WavFile()
+9.00 ms    0.0%	0 s	 	      std::__1::vector<float, std::__1::allocator<float>>::~vector[abi:v160006]()
+9.00 ms    0.0%	0 s	 	       std::__1::vector<float, std::__1::allocator<float>>::~vector[abi:v160006]()
+9.00 ms    0.0%	0 s	 	        std::__1::vector<float, std::__1::allocator<float>>::__destroy_vector::operator()[abi:v160006]()
+9.00 ms    0.0%	0 s	 	         std::__1::vector<float, std::__1::allocator<float>>::__clear[abi:v160006]()
+9.00 ms    0.0%	4.00 ms	 	          std::__1::vector<float, std::__1::allocator<float>>::__base_destruct_at_end[abi:v160006](float*)
+2.00 ms    0.0%	2.00 ms	 	           std::__1::vector<float, std::__1::allocator<float>>::__alloc[abi:v160006]()
+2.00 ms    0.0%	1.00 ms	 	           void std::__1::allocator_traits<std::__1::allocator<float>>::destroy[abi:v160006]<float, void>(std::__1::allocator<float>&, float*)
+1.00 ms    0.0%	1.00 ms	 	            std::__1::allocator<float>::destroy[abi:v160006](float*)
+1.00 ms    0.0%	1.00 ms	 	           float* std::__1::__to_address[abi:v160006]<float>(float*)
+1.00 ms    0.0%	0 s	 	   dyld4::prepare(dyld4::APIs&, dyld3::MachOAnalyzer const*)
+1.00 ms    0.0%	0 s	 	    dyld4::APIs::runAllInitializersForMain()
+1.00 ms    0.0%	0 s	 	     dyld4::PrebuiltLoader::runInitializers(dyld4::RuntimeState&) const
+1.00 ms    0.0%	0 s	 	      dyld4::Loader::findAndRunAllInitializers(dyld4::RuntimeState&) const
+1.00 ms    0.0%	0 s	 	       dyld3::MachOAnalyzer::forEachInitializer(Diagnostics&, dyld3::MachOAnalyzer::VMAddrConverter const&, void (unsigned int) block_pointer, void const*) const
+1.00 ms    0.0%	0 s	 	        dyld3::MachOFile::forEachSection(void (dyld3::MachOFile::SectionInfo const&, bool, bool&) block_pointer) const
+1.00 ms    0.0%	0 s	 	         dyld3::MachOFile::forEachLoadCommand(Diagnostics&, void (load_command const*, bool&) block_pointer) const
+1.00 ms    0.0%	0 s	 	          invocation function for block in dyld3::MachOFile::forEachSection(void (dyld3::MachOFile::SectionInfo const&, bool, bool&) block_pointer) const
+1.00 ms    0.0%	0 s	 	           invocation function for block in dyld3::MachOAnalyzer::forEachInitializer(Diagnostics&, dyld3::MachOAnalyzer::VMAddrConverter const&, void (unsigned int) block_pointer, void const*) const
+1.00 ms    0.0%	0 s	 	            invocation function for block in dyld4::Loader::findAndRunAllInitializers(dyld4::RuntimeState&) const::$_0::operator()() const
+1.00 ms    0.0%	0 s	 	             libSystem_initializer
+1.00 ms    0.0%	0 s	 	              __libkernel_init
+1.00 ms    0.0%	1.00 ms	 	               access
+1.00 ms    0.0%	0 s	 	  0x102bc9bf0
+1.00 ms    0.0%	1.00 ms	 	   0x102c3bcd1
