@@ -1,3 +1,4 @@
+#pragma once
 #include "WavData.h"
 #include "WavHeader.h"
 #include <vector>
