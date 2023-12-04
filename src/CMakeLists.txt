@@ -16,3 +16,4 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/guitar_short.wav
 DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(convolve ${SOURCES})
+

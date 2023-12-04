@@ -32,6 +32,9 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 
 The algorithm-based optimized program re-implements the convolution algorithm using a frequency-domain algorithm known as the overlap-add FFT convolution algorithm.
 
+```C++
+```
+
 ## Timing
 
 All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./build/src/output.wav`.
@@ -39,7 +42,7 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | Version | Time                                             |
 | ------- | ------------------------------------------------ |
 | v1.0    | 830.50s user 0.22s system 99% cpu 13:53.90 total |
-| v2.0    |                                                  |
+| v2.0    | 3.56s user 0.02s system 99% cpu 3.592 total      |
 
 ## Profiling
 
@@ -48,13 +51,19 @@ All programs were profiled using `xcrun xctrace record -t "Time Profiler" --laun
 | Version | Profile Location  |
 | ------- | ----------------- |
 | v1.0    | ./profilev1.0.txt |
-| v2.0    |                   |
+| v2.0    | ./profilev2.0.txt |
+
+### Flamegraphs
+
+#### v2.0
+
+![flamegraphv2.0](./flamegraphv2.0.svg)
 
 ## Regression Testing
 
 | Unit Test                       | v1.0 | v2.0 |
 | ------------------------------- | ---- | ---- |
-| Convolve function test          | ✅    |      |
-| WavFile read                    | ✅    |      |
-| WavFile write                   | ✅    |      |
-| Convolver convolve on wav files | ✅    |      |
+| Convolve function test          | ✅    | ✅    |
+| WavFile read                    | ✅    | ✅    |
+| WavFile write                   | ✅    | ✅    |
+| Convolver convolve on wav files | ✅    | ✅    |

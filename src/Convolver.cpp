@@ -1,63 +1,68 @@
 #include "Convolver.h"
 
-using namespace Convolve;
-
 #define SWAP(a, b)                                                             \
   tempr = (a);                                                                 \
   (a) = (b);                                                                   \
   (b) = tempr
 
+using namespace Convolve;
+
 std::vector<float> Convolver::convolve(const std::vector<float> &x,
                                        const std::vector<float> &h) {
   std::cout << "Convolving input signal and impulse response" << std::endl;
 
-  int N = x.size();
-  int M = h.size();
+  size_t outputSize = x.size() + h.size() - 1;
+  size_t nn = pow(2, ceil(log2(x.size() * 2)));
+  size_t k, real, imag;
 
-  int nn = 1;
-  // nn must be a power of 2
-  do {
-    nn *= 2;
-  } while (nn <= (N + M - 1));
+  std::vector<float> X(nn * 2 + 1, 0.0f);
+  std::vector<float> H(nn * 2 + 1, 0.0f);
+  std::vector<float> Y(nn * 2 + 1, 0.0f);
 
-  std::vector<float> paddedX(nn, 0.0);
-  std::vector<float> paddedH(nn, 0.0);
-  std::copy(x.begin(), x.end(), paddedX.begin());
-  std::copy(h.begin(), h.end(), paddedH.begin());
-
-  // convolve
-  fft(paddedX, nn, 1);
-  fft(paddedH, nn, 1);
-
-  for (size_t i = 0; i < nn; i++) {
-    paddedX[i] *= paddedH[i];
+  for (k = 0; k < x.size(); k++) {
+    real = (k * 2) + 1;
+    imag = real + 1;
+    X[real] = x[k];
+    X[imag] = 0.0f;
   }
 
-  fft(paddedX, nn, -1);
-
-  std::vector<float> y(nn);
-  for (size_t i = 0; i < nn; i++) {
-    y[i] = paddedX[i];
+  for (k = 0; k < h.size(); k++) {
+    real = (k * 2) + 1;
+    imag = real + 1;
+    H[real] = h[k];
+    H[imag] = 0.0f;
   }
 
-  for (size_t k = 0, i = 0; k < N; k++, i += 2) {
-    y[i] /= (float)N;
-    y[i + 1] /= (float)N;
+  fft(X, nn, 1);
+  fft(H, nn, 1);
+
+  for (k = 0; k < nn; k++) {
+    real = (k * 2) + 1;
+    imag = real + 1;
+    float Xr = X[real], Xi = X[imag];
+    float Hr = H[real], Hi = H[imag];
+    Y[real] = (Xr * Hr) - (Xi * Hi);
+    Y[imag] = (Xr * Hi) + (Xi * Hr);
   }
 
-  return y;
+  fft(Y, nn, -1);
+
+  for (k = 0; k <= nn; k++) {
+    real = (k * 2) + 1;
+    Y[real] /= static_cast<float>(nn);
+  }
+
+  std::vector<float> result(outputSize);
+  for (size_t k = 0; k < outputSize; k++) {
+    real = (k * 2) + 1;
+    result[k] = Y[real];
+  }
+
+  return result;
 }
 
-void Convolver::createComplexData(const std::vector<float> &input,
-                                  float *data) {
-  int i, ii;
-
-  for (i = 0, ii = 0; i < input.size(); i++, ii += 2) {
-    data[ii] = input[i];
-    data[ii + 1] = 0.0;
-  }
-}
-
+// fft assumes array starts at index 1
+// data is complex so array size must be nn * 2
 void Convolver::fft(std::vector<float> &data, int nn, int isign) {
   unsigned long n, mmax, m, j, istep, i;
   double wtemp, wr, wpr, wpi, wi, theta;
