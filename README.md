@@ -127,10 +127,3 @@ All programs were profiled using `xcrun xctrace record -t "Time Profiler" --laun
 ### v4.4
 
 ## Regression Testing
-
-| Unit Test                       | v1.0 | v2.0 |
-| ------------------------------- | ---- | ---- |
-| Convolve function test          | ✅    | ✅    |
-| WavFile read                    | ✅    | ✅    |
-| WavFile write                   | ✅    | ✅    |
-| Convolver convolve on wav files | ✅    | ✅    |
