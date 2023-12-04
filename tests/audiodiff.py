@@ -3,8 +3,10 @@ import os
 
 firstOutputWavPath = os.path.normpath("./tests/outputv1.0.wav")
 secondOutputWavPath = os.path.normpath("./tests/outputv2.0.wav")
+thirdOutputWavPath = os.path.normpath("./tests/outputv3.0.wav")
 firstOutputWav = wave.open(firstOutputWavPath, "rb")
 secondOutputWav = wave.open(secondOutputWavPath, "rb")
+thirdOutputWav = wave.open(thirdOutputWavPath, "rb")
 
 print("\n")
 print(firstOutputWavPath)
@@ -19,13 +21,20 @@ print("Sample width", secondOutputWav.getsampwidth())
 print("Frame rate", secondOutputWav.getframerate())
 print("Number of frames", secondOutputWav.getnframes())
 print("\n")
+print(thirdOutputWavPath)
+print("Number of channels", thirdOutputWav.getnchannels())
+print("Sample width", thirdOutputWav.getsampwidth())
+print("Frame rate", thirdOutputWav.getframerate())
+print("Number of frames", thirdOutputWav.getnframes())
+print("\n")
 
 firstOutputFrames = firstOutputWav.readframes(firstOutputWav.getnframes())
 secondOutputFrames = secondOutputWav.readframes(secondOutputWav.getnframes())
+thirdOutputFrames = thirdOutputWav.readframes(thirdOutputWav.getnframes())
 
 print("Comparing frames...")
 test = False
-if firstOutputFrames == secondOutputFrames:
+if firstOutputFrames == secondOutputFrames == thirdOutputFrames:
     test = True
 else:
     test = False
