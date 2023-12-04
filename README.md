@@ -94,6 +94,25 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 
 The compiler-level optimization version compiles source code with the gcc/g++ -O3 flag set.
 
+## v4.0 - Code Tuning Optimization - 
+
+vector initialization prior to optimization:
+```C++
+std::vector<float> X(nn * 2 + 1, 0.0f);
+std::vector<float> H(nn * 2 + 1, 0.0f);
+std::vector<float> Y(nn * 2 + 1, 0.0f);
+```
+
+vector initialization after optimization:
+```C++
+std::vector<float> X(0.0f);
+X.reserve(nn * 2 + 1);
+std::vector<float> H(0.0f);
+H.reserve(nn * 2 + 1);
+std::vector<float> Y(0.0f);
+Y.reserve(nn * 2 + 1);
+```
+
 ## Timing
 
 All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`.
@@ -103,19 +122,11 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | v1.0    | 830.50s user 0.22s system 99% cpu 13:53.90 total |
 | v2.0    | 3.56s user 0.02s system 99% cpu 3.592 total      |
 | v3.0    | 1.43s user 0.03s system 83% cpu 1.735 total      |
+| v4.0    | 1.42s user 0.02s system 99% cpu 1.452 total      |
 
-## Profiling
+### Profiling
 
-All programs were profiled using `xcrun xctrace record -t "Time Profiler" --launch ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`. 
-
-| Version | Profile Location  |
-| ------- | ----------------- |
-| v1.0    | ./profilev1.0.txt |
-| v2.0    | ./profilev2.0.txt |
-
-### Flamegraphs
-
-All programs were also profiled by creating and examining flamegraphs by running `flamegraph --output flamegraph<version>.svg --root -- ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`
+All programs were profiled by creating and examining flamegraphs by running `flamegraph --output flamegraph<version>.svg --root -- ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`
 
 #### v2.0
 
@@ -126,6 +137,8 @@ All programs were also profiled by creating and examining flamegraphs by running
 ![flamegraphv3.0](./flamegraphv3.0.svg)
 
 ### v4.0
+
+![flamegraphv4.0](./flamegraphv4.0.svg)
 
 ### v4.1
 
@@ -140,31 +153,35 @@ All programs were also profiled by creating and examining flamegraphs by running
 Regression testing is accomplished by comparing the output.wav files between versions, ensuring convolve() produces the same result. Running `python3 ./tests/audiodiff.py` compares the output wav files by comparing the frames produced by all versions of convolve(). Below is the output produced by `audiodiff.py`.
 
 ```zsh
-❯ python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py
+❯ /opt/homebrew/bin/python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py                                                                          
 
 
-tests/outputv1.0.wav
+./tests/outputv1.0.wav
 Number of channels 1
 Sample width 2
 Frame rate 44100
 Number of frames 817508530
 
 
-tests/outputv2.0.wav
+./tests/outputv2.0.wav
 Number of channels 1
 Sample width 2
 Frame rate 44100
 Number of frames 817508530
 
 
-tests/outputv3.0.wav
+./tests/outputv3.0.wav
 Number of channels 1
 Sample width 2
 Frame rate 44100
 Number of frames 817508530
 
 
-Comparing frames...
+./tests/outputv4.0.wav
+Number of channels 1
+Sample width 2
+Frame rate 44100
+Number of frames 817508530
 Output wav files are equal
 --------------------------
 All tests passed ✅

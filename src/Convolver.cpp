@@ -1,10 +1,5 @@
 #include "Convolver.h"
 
-#define SWAP(a, b)                                                             \
-  tempr = (a);                                                                 \
-  (a) = (b);                                                                   \
-  (b) = tempr
-
 using namespace Convolve;
 
 std::vector<float> Convolver::convolve(const std::vector<float> &x,
@@ -15,9 +10,12 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
   size_t nn = pow(2, ceil(log2(x.size() * 2)));
   size_t k, real, imag;
 
-  std::vector<float> X(nn * 2 + 1, 0.0f);
-  std::vector<float> H(nn * 2 + 1, 0.0f);
-  std::vector<float> Y(nn * 2 + 1, 0.0f);
+  std::vector<float> X(0.0f);
+  X.reserve(nn * 2 + 1);
+  std::vector<float> H(0.0f);
+  H.reserve(nn * 2 + 1);
+  std::vector<float> Y(0.0f);
+  Y.reserve(nn * 2 + 1);
 
   for (k = 0; k < x.size(); k++) {
     real = (k * 2) + 1;
@@ -73,8 +71,8 @@ void Convolver::fft(std::vector<float> &data, int nn, int isign) {
 
   for (i = 1; i < n; i += 2) {
     if (j > i) {
-      SWAP(data[j], data[i]);
-      SWAP(data[j + 1], data[i + 1]);
+      std::swap(data[j], data[i]);
+      std::swap(data[j + 1], data[i + 1]);
     }
     m = nn;
     while (m >= 2 && j > m) {
