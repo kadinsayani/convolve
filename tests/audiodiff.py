@@ -1,45 +1,33 @@
 import wave
 import os
 
-firstOutputWavPath = os.path.normpath("./tests/outputv1.0.wav")
-secondOutputWavPath = os.path.normpath("./tests/outputv2.0.wav")
-thirdOutputWavPath = os.path.normpath("./tests/outputv3.0.wav")
-firstOutputWav = wave.open(firstOutputWavPath, "rb")
-secondOutputWav = wave.open(secondOutputWavPath, "rb")
-thirdOutputWav = wave.open(thirdOutputWavPath, "rb")
+output_paths = [
+    "./tests/outputv1.0.wav",
+    "./tests/outputv2.0.wav",
+    "./tests/outputv3.0.wav",
+    "./tests/outputv4.0.wav"
+]
 
-print("\n")
-print(firstOutputWavPath)
-print("Number of channels", firstOutputWav.getnchannels())
-print("Sample width", firstOutputWav.getsampwidth())
-print("Frame rate", firstOutputWav.getframerate())
-print("Number of frames", firstOutputWav.getnframes())
-print("\n")
-print(secondOutputWavPath)
-print("Number of channels", secondOutputWav.getnchannels())
-print("Sample width", secondOutputWav.getsampwidth())
-print("Frame rate", secondOutputWav.getframerate())
-print("Number of frames", secondOutputWav.getnframes())
-print("\n")
-print(thirdOutputWavPath)
-print("Number of channels", thirdOutputWav.getnchannels())
-print("Sample width", thirdOutputWav.getsampwidth())
-print("Frame rate", thirdOutputWav.getframerate())
-print("Number of frames", thirdOutputWav.getnframes())
-print("\n")
+output_wavs = [wave.open(os.path.normpath(path), "rb")
+               for path in output_paths]
 
-firstOutputFrames = firstOutputWav.readframes(firstOutputWav.getnframes())
-secondOutputFrames = secondOutputWav.readframes(secondOutputWav.getnframes())
-thirdOutputFrames = thirdOutputWav.readframes(thirdOutputWav.getnframes())
+for i, output_wav in enumerate(output_wavs):
+    print("\n")
+    print(output_paths[i])
+    print("Number of channels", output_wav.getnchannels())
+    print("Sample width", output_wav.getsampwidth())
+    print("Frame rate", output_wav.getframerate())
+    print("Number of frames", output_wav.getnframes())
 
-print("Comparing frames...")
-test = False
-if firstOutputFrames == secondOutputFrames == thirdOutputFrames:
-    test = True
-else:
-    test = False
 
-if test:
+def compare_frames(frames_list):
+    return all(frame == frames_list[0] for frame in frames_list)
+
+
+output_frames = [output_wav.readframes(
+    output_wav.getnframes()) for output_wav in output_wavs]
+
+if compare_frames(output_frames):
     print("Output wav files are equal")
     print("--------------------------")
     print("All tests passed ✅")
