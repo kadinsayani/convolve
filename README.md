@@ -88,9 +88,9 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 }
 ```
 
-## v3.0 - Compiler-Based Optimization
+## v3.0 - Compiler-Level Optimization
 
-The compiler-based optimization version compiles source code with the gcc/g++ -O3 flag set.
+The compiler-level optimization version compiles source code with the gcc/g++ -O3 flag set.
 
 ## Timing
 
