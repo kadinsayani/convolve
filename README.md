@@ -92,7 +92,7 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 
 ## Timing
 
-All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./build/src/output.wav`.
+All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`.
 
 | Version | Time                                             |
 | ------- | ------------------------------------------------ |
@@ -101,7 +101,7 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 
 ## Profiling
 
-All programs were profiled using `xcrun xctrace record -t "Time Profiler" --launch ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./build/src/output.wav`.
+All programs were profiled using `xcrun xctrace record -t "Time Profiler" --launch ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`.
 
 | Version | Profile Location  |
 | ------- | ----------------- |
@@ -127,3 +127,29 @@ All programs were profiled using `xcrun xctrace record -t "Time Profiler" --laun
 ### v4.4
 
 ## Regression Testing
+
+Regression testing is accomplished by comparing the output.wav files between versions, ensuring convolve() produces the same result. Running `python3 ./tests/audiodiff.py` compares the output wav files by comparing the frames produced by all versions of convolve(). Below is the output produced by `audiodiff.py`.
+
+```zsh
+❯ python3 ./tests/audiodiff.py
+
+
+tests/outputv1.0.wav
+Number of channels 1
+Sample width 2
+Frame rate 44100
+Number of frames 817508530
+
+
+tests/outputv2.0.wav
+Number of channels 1
+Sample width 2
+Frame rate 44100
+Number of frames 817508530
+
+
+Comparing frames...
+Output wav files are equal
+--------------------------
+All tests passed ✅
+```
