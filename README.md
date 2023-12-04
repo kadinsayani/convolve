@@ -30,10 +30,65 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 
 ## v2.0 - Algorithm-Based Optimization
 
-The algorithm-based optimized program re-implements the convolution algorithm using a frequency-domain algorithm known as the overlap-add FFT convolution algorithm.
+The algorithm-based optimized program re-implements the convolution algorithm using a frequency-domain FFT convolution algorithm.
 
 ```C++
+std::vector<float> Convolver::convolve(const std::vector<float> &x,
+                                       const std::vector<float> &h) {
+  std::cout << "Convolving input signal and impulse response" << std::endl;
+
+  size_t outputSize = x.size() + h.size() - 1;
+  size_t nn = pow(2, ceil(log2(x.size() * 2)));
+  size_t k, real, imag;
+
+  std::vector<float> X(nn * 2 + 1, 0.0f);
+  std::vector<float> H(nn * 2 + 1, 0.0f);
+  std::vector<float> Y(nn * 2 + 1, 0.0f);
+
+  for (k = 0; k < x.size(); k++) {
+    real = (k * 2) + 1;
+    imag = real + 1;
+    X[real] = x[k];
+    X[imag] = 0.0f;
+  }
+
+  for (k = 0; k < h.size(); k++) {
+    real = (k * 2) + 1;
+    imag = real + 1;
+    H[real] = h[k];
+    H[imag] = 0.0f;
+  }
+
+  fft(X, nn, 1);
+  fft(H, nn, 1);
+
+  for (k = 0; k < nn; k++) {
+    real = (k * 2) + 1;
+    imag = real + 1;
+    float Xr = X[real], Xi = X[imag];
+    float Hr = H[real], Hi = H[imag];
+    Y[real] = (Xr * Hr) - (Xi * Hi);
+    Y[imag] = (Xr * Hi) + (Xi * Hr);
+  }
+
+  fft(Y, nn, -1);
+
+  for (k = 0; k <= nn; k++) {
+    real = (k * 2) + 1;
+    Y[real] /= static_cast<float>(nn);
+  }
+
+  std::vector<float> result(outputSize);
+  for (size_t k = 0; k < outputSize; k++) {
+    real = (k * 2) + 1;
+    result[k] = Y[real];
+  }
+
+  return result;
+}
 ```
+
+## v3.0 - Compiler-Based Optimization
 
 ## Timing
 
@@ -58,6 +113,18 @@ All programs were profiled using `xcrun xctrace record -t "Time Profiler" --laun
 #### v2.0
 
 ![flamegraphv2.0](./flamegraphv2.0.svg)
+
+### v3.0
+
+### v4.0
+
+### v4.1
+
+### v4.2
+
+### v4.3
+
+### v4.4
 
 ## Regression Testing
 
