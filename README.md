@@ -98,14 +98,14 @@ The compiler-level optimization version compiles source code with the gcc/g++ -O
 
 Reserving space for vectors using reserve() improves runtime and is more efficient. The below code snippets show vector initialization prior to and after this optimization.
 
-vector initialization prior to optimization:
+Vector initialization prior to optimization:
 ```C++
 std::vector<float> X(nn * 2 + 1, 0.0f);
 std::vector<float> H(nn * 2 + 1, 0.0f);
 std::vector<float> Y(nn * 2 + 1, 0.0f);
 ```
 
-vector initialization after optimization:
+Vector initialization after optimization:
 ```C++
 std::vector<float> X(0.0f);
 X.reserve(nn * 2 + 1);
@@ -126,22 +126,43 @@ size_t chunkSizeH = h.size() / numThreads;
 
 std::vector<std::thread> threadsX(numThreads);
 for (size_t i = 0; i < numThreads; i++) {
-threadsX[i] = std::thread(parallelLoop, std::ref(X), std::cref(x),
+  threadsX[i] = std::thread(parallelLoop, std::ref(X), std::cref(x),
                             i * chunkSizeX, (i + 1) * chunkSizeX);
 }
 
 for (auto &thread : threadsX) {
-thread.join();
+  thread.join();
 }
 
 std::vector<std::thread> threadsH(numThreads);
 for (size_t i = 0; i < numThreads; i++) {
-threadsH[i] = std::thread(parallelLoop, std::ref(H), std::cref(h),
+  threadsH[i] = std::thread(parallelLoop, std::ref(H), std::cref(h),
                             i * chunkSizeH, (i + 1) * chunkSizeH);
 }
 
 for (auto &thread : threadsH) {
-thread.join();
+  thread.join();
+}
+```
+
+## v4.2 - Code Tuning Optimization - Precomputing Division for Scaling
+
+Precomputing the division for scaling and replacing divison with multiplication improves runtime performance. The below code snippets show scaling prior to and after the code tuning.
+
+Scaling prior to optimization:
+```C++
+for (k = 0; k <= nn; k++) {
+  real = (k * 2) + 1;
+  Y[real] /= static_cast<float>(nn);
+}
+```
+
+Scaling after optimization:
+```C++
+float inv_nn = 1.0f / static_cast<float>(nn);
+for (k = 0; k <= nn; k++) {
+  real = (k * 2) + 1;
+  Y[real] *= inv_nn;
 }
 ```
 
@@ -156,6 +177,7 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | v3.0    | 1.43s user 0.03s system 83% cpu 1.735 total      |
 | v4.0    | 1.42s user 0.02s system 99% cpu 1.452 total      |
 | v4.1    | 1.43s user 0.03s system 100% cpu 1.448 total     |
+| v4.2    | 1.43s user 0.04s system 81% cpu 1.787 total      |
 
 ### Profiling
 
@@ -179,6 +201,8 @@ All programs were profiled by creating and examining flamegraphs by running `fla
 
 ### v4.2
 
+![flamegraphv4.2](./flamegraphv4.2.svg)
+
 ### v4.3
 
 ### v4.4
@@ -188,7 +212,7 @@ All programs were profiled by creating and examining flamegraphs by running `fla
 Regression testing is accomplished by comparing the output.wav files between versions, ensuring convolve() produces the same result. Running `python3 ./tests/audiodiff.py` compares the output wav files by comparing the frames produced by all versions of convolve(). Below is the output produced by `audiodiff.py`.
 
 ```zsh
-❯ /opt/homebrew/bin/python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py
+❯ python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py
 
 
 ./tests/outputv1.0.wav
@@ -224,6 +248,15 @@ Number of channels 1
 Sample width 2
 Frame rate 44100
 Number of frames 817508530
+
+
+./tests/outputv4.2.wav
+Number of channels 1
+Sample width 2
+Frame rate 44100
+Number of frames 817508530
+
+
 Output wav files are equal
 --------------------------
 All tests passed ✅

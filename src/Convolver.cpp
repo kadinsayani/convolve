@@ -51,20 +51,6 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
     thread.join();
   }
 
-  //   for (k = 0; k < x.size(); k++) {
-  //     real = (k * 2) + 1;
-  //     imag = real + 1;
-  //     X[real] = x[k];
-  //     X[imag] = 0.0f;
-  //   }
-
-  //   for (k = 0; k < h.size(); k++) {
-  //     real = (k * 2) + 1;
-  //     imag = real + 1;
-  //     H[real] = h[k];
-  //     H[imag] = 0.0f;
-  //   }
-
   fft(X, nn, 1);
   fft(H, nn, 1);
 
@@ -79,9 +65,10 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 
   fft(Y, nn, -1);
 
+  float inv_nn = 1.0f / static_cast<float>(nn);
   for (k = 0; k <= nn; k++) {
     real = (k * 2) + 1;
-    Y[real] /= static_cast<float>(nn);
+    Y[real] *= inv_nn;
   }
 
   std::vector<float> result(outputSize);
