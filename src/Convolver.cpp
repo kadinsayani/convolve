@@ -17,7 +17,15 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
   std::cout << "Convolving input signal and impulse response" << std::endl;
 
   size_t outputSize = x.size() + h.size() - 1;
-  size_t nn = pow(2, ceil(log2(x.size() * 2)));
+  size_t nn = x.size() * 2;
+  nn--;
+  nn |= nn >> 1;
+  nn |= nn >> 2;
+  nn |= nn >> 4;
+  nn |= nn >> 8;
+  nn |= nn >> 16;
+  nn |= nn >> 32;
+  nn++;
   size_t k, real, imag;
 
   std::vector<float> X(0.0f);

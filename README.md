@@ -166,6 +166,22 @@ for (k = 0; k <= nn; k++) {
 }
 ```
 
+## v4.3 - Code Tuning Optimization - Computing Next Power of 2
+
+Using bitwise operations rather than cmath pow() and log() functions improves runtime efficiency when computing the next power of 2 from 2 * N, where N is the size of the vector x. 
+
+```C++
+size_t nn = x.size() * 2;
+nn--;
+nn |= nn >> 1;
+nn |= nn >> 2;
+nn |= nn >> 4;
+nn |= nn >> 8;
+nn |= nn >> 16;
+nn |= nn >> 32;
+nn++;
+```
+
 ## Timing
 
 All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`.
@@ -178,6 +194,7 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | v4.0    | 1.42s user 0.02s system 99% cpu 1.452 total      |
 | v4.1    | 1.43s user 0.03s system 100% cpu 1.448 total     |
 | v4.2    | 1.43s user 0.04s system 81% cpu 1.787 total      |
+| v4.3    | 1.43s user 0.03s system 100% cpu 1.460 total     |
 
 ### Profiling
 
@@ -204,6 +221,9 @@ All programs were profiled by creating and examining flamegraphs by running `fla
 ![flamegraphv4.2](./flamegraphv4.2.svg)
 
 ### v4.3
+
+![flamegraphv4.3](./flamegraphv4.3.svg)
+
 
 ### v4.4
 
@@ -251,6 +271,13 @@ Number of frames 817508530
 
 
 ./tests/outputv4.2.wav
+Number of channels 1
+Sample width 2
+Frame rate 44100
+Number of frames 817508530
+
+
+./tests/outputv4.3.wav
 Number of channels 1
 Sample width 2
 Frame rate 44100
