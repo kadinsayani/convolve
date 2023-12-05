@@ -2,6 +2,16 @@
 
 using namespace Convolve;
 
+void parallelLoop(std::vector<float> &vec, const std::vector<float> &src,
+                  size_t start, size_t end) {
+  for (size_t k = start; k < end; k++) {
+    size_t real = (k * 2) + 1;
+    size_t imag = real + 1;
+    vec[real] = src[k];
+    vec[imag] = 0.0f;
+  }
+}
+
 std::vector<float> Convolver::convolve(const std::vector<float> &x,
                                        const std::vector<float> &h) {
   std::cout << "Convolving input signal and impulse response" << std::endl;
@@ -17,19 +27,43 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
   std::vector<float> Y(0.0f);
   Y.reserve(nn * 2 + 1);
 
-  for (k = 0; k < x.size(); k++) {
-    real = (k * 2) + 1;
-    imag = real + 1;
-    X[real] = x[k];
-    X[imag] = 0.0f;
+  const size_t numThreads = std::thread::hardware_concurrency();
+  size_t chunkSizeX = x.size() / numThreads;
+  size_t chunkSizeH = h.size() / numThreads;
+
+  std::vector<std::thread> threadsX(numThreads);
+  for (size_t i = 0; i < numThreads; i++) {
+    threadsX[i] = std::thread(parallelLoop, std::ref(X), std::cref(x),
+                              i * chunkSizeX, (i + 1) * chunkSizeX);
   }
 
-  for (k = 0; k < h.size(); k++) {
-    real = (k * 2) + 1;
-    imag = real + 1;
-    H[real] = h[k];
-    H[imag] = 0.0f;
+  for (auto &thread : threadsX) {
+    thread.join();
   }
+
+  std::vector<std::thread> threadsH(numThreads);
+  for (size_t i = 0; i < numThreads; i++) {
+    threadsH[i] = std::thread(parallelLoop, std::ref(H), std::cref(h),
+                              i * chunkSizeH, (i + 1) * chunkSizeH);
+  }
+
+  for (auto &thread : threadsH) {
+    thread.join();
+  }
+
+  //   for (k = 0; k < x.size(); k++) {
+  //     real = (k * 2) + 1;
+  //     imag = real + 1;
+  //     X[real] = x[k];
+  //     X[imag] = 0.0f;
+  //   }
+
+  //   for (k = 0; k < h.size(); k++) {
+  //     real = (k * 2) + 1;
+  //     imag = real + 1;
+  //     H[real] = h[k];
+  //     H[imag] = 0.0f;
+  //   }
 
   fft(X, nn, 1);
   fft(H, nn, 1);
@@ -59,8 +93,6 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
   return result;
 }
 
-// fft assumes array starts at index 1
-// data is complex so array size must be nn * 2
 void Convolver::fft(std::vector<float> &data, int nn, int isign) {
   unsigned long n, mmax, m, j, istep, i;
   double wtemp, wr, wpr, wpi, wi, theta;

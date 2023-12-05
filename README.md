@@ -94,7 +94,9 @@ std::vector<float> Convolver::convolve(const std::vector<float> &x,
 
 The compiler-level optimization version compiles source code with the gcc/g++ -O3 flag set.
 
-## v4.0 - Code Tuning Optimization - 
+## v4.0 - Code Tuning Optimization - Vector Initialization 
+
+Reserving space for vectors using reserve() improves runtime and is more efficient. The below code snippets show vector initialization prior to and after this optimization.
 
 vector initialization prior to optimization:
 ```C++
@@ -113,6 +115,36 @@ std::vector<float> Y(0.0f);
 Y.reserve(nn * 2 + 1);
 ```
 
+## v4.1 - Code Tuning Optimization - Multithreading Vector Initialization
+
+Vector initialization was optimized by using multithreading to parallelize initialization of X and H.
+
+```C++
+const size_t numThreads = std::thread::hardware_concurrency();
+size_t chunkSizeX = x.size() / numThreads;
+size_t chunkSizeH = h.size() / numThreads;
+
+std::vector<std::thread> threadsX(numThreads);
+for (size_t i = 0; i < numThreads; i++) {
+threadsX[i] = std::thread(parallelLoop, std::ref(X), std::cref(x),
+                            i * chunkSizeX, (i + 1) * chunkSizeX);
+}
+
+for (auto &thread : threadsX) {
+thread.join();
+}
+
+std::vector<std::thread> threadsH(numThreads);
+for (size_t i = 0; i < numThreads; i++) {
+threadsH[i] = std::thread(parallelLoop, std::ref(H), std::cref(h),
+                            i * chunkSizeH, (i + 1) * chunkSizeH);
+}
+
+for (auto &thread : threadsH) {
+thread.join();
+}
+```
+
 ## Timing
 
 All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`.
@@ -123,6 +155,7 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | v2.0    | 3.56s user 0.02s system 99% cpu 3.592 total      |
 | v3.0    | 1.43s user 0.03s system 83% cpu 1.735 total      |
 | v4.0    | 1.42s user 0.02s system 99% cpu 1.452 total      |
+| v4.1    | 1.43s user 0.03s system 100% cpu 1.448 total     |
 
 ### Profiling
 
@@ -142,6 +175,8 @@ All programs were profiled by creating and examining flamegraphs by running `fla
 
 ### v4.1
 
+![flamegraphv4.1](./flamegraphv4.1.svg)
+
 ### v4.2
 
 ### v4.3
@@ -153,7 +188,7 @@ All programs were profiled by creating and examining flamegraphs by running `fla
 Regression testing is accomplished by comparing the output.wav files between versions, ensuring convolve() produces the same result. Running `python3 ./tests/audiodiff.py` compares the output wav files by comparing the frames produced by all versions of convolve(). Below is the output produced by `audiodiff.py`.
 
 ```zsh
-❯ /opt/homebrew/bin/python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py                                                                          
+❯ /opt/homebrew/bin/python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py
 
 
 ./tests/outputv1.0.wav
@@ -178,6 +213,13 @@ Number of frames 817508530
 
 
 ./tests/outputv4.0.wav
+Number of channels 1
+Sample width 2
+Frame rate 44100
+Number of frames 817508530
+
+
+./tests/outputv4.1.wav
 Number of channels 1
 Sample width 2
 Frame rate 44100
