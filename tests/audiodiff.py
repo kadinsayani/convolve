@@ -28,6 +28,7 @@ def compare_frames(frames_list):
 output_frames = [output_wav.readframes(
     output_wav.getnframes()) for output_wav in output_wavs]
 
+print("\n")
 if compare_frames(output_frames):
     print("Output wav files are equal")
     print("--------------------------")
