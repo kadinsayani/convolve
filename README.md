@@ -214,7 +214,7 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | v4.1    | 1.43s user 0.03s system 100% cpu 1.448 total     |
 | v4.2    | 1.43s user 0.04s system 81% cpu 1.787 total      |
 | v4.3    | 1.43s user 0.03s system 100% cpu 1.460 total     |
-| v4.4    | 1.43s user 0.03s system 99% cpu 1.459 total      |
+| v4.4    | 1.42s user 0.03s system 83% cpu 1.742 total      |
 
 ### Profiling
 
