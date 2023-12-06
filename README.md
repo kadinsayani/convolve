@@ -218,43 +218,43 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 
 ## Profiling
 
-Flamegraphs were generated for all programs using the command `flamegraph --output flamegraph<version>.svg --root -- ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`. 
+Flamegraphs were generated for all programs using the command `flamegraph --output ./flamegraphs/flamegraph<version>.svg --root -- ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`. 
 
 Flamegraphs are a visualization tool for profiling, allowing us to understand the most resource-intensive parts of a program. Each box in the graph represents a function, with the width indicating the amount of time spent in that function. The y-axis shows the stack depth, with the topmost box being the currently executing function.
 
 ### v1.0
 
-![flamegraphv1.0](./flamegraphv1.0.svg)
+![flamegraphv1.0](./flamegraphs/flamegraphv1.0.svg)
 
 ### v2.0
 
-![flamegraphv2.0](./flamegraphv2.0.svg)
+![flamegraphv2.0](./flamegraphs/flamegraphv2.0.svg)
 
 ### v3.0
 
-![flamegraphv3.0](./flamegraphv3.0.svg)
+![flamegraphv3.0](./flamegraphs/flamegraphv3.0.svg)
 
 ### v4.0
 
 Despite applying code tuning techniques in versions v4.0-v4.4, significant improvements may not be apparent in the flamegraphs. This is because the program is already highly optimized due to algorithmic efficiencies and compiler-level optimizations. However, in theory, these code tunings should enhance the program's performance.
 
-![flamegraphv4.0](./flamegraphv4.0.svg)
+![flamegraphv4.0](./flamegraphs/flamegraphv4.0.svg)
 
 ### v4.1
 
-![flamegraphv4.1](./flamegraphv4.1.svg)
+![flamegraphv4.1](./flamegraphs/flamegraphv4.1.svg)
 
 ### v4.2
 
-![flamegraphv4.2](./flamegraphv4.2.svg)
+![flamegraphv4.2](./flamegraphs/flamegraphv4.2.svg)
 
 ### v4.3
 
-![flamegraphv4.3](./flamegraphv4.3.svg)
+![flamegraphv4.3](./flamegraphs/flamegraphv4.3.svg)
 
 ### v4.4
 
-![flamegraphv4.4](./flamegraphv4.4.svg)
+![flamegraphv4.4](./flamegraphs/flamegraphv4.4.svg)
 
 ## Regression Testing
 
