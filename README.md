@@ -2,7 +2,7 @@
 
 ## CPSC 501 A4 Report
 
-The convolve project encompasses multiple versions of a convolution algorithm, each tagged in the Git repository. The initial version (v1.0) implements a straightforward time-domain convolution algorithm. Subsequent versions include algorithm-based optimizations (v2.0), compiler-level optimizations (v3.0), and versions optimized using code tuning, denoted as v4.0, v4.1, v4.2, v4.3, and v4.4. The optimizations lead to significant improvements in execution time, as evidenced by timing results, where v2.0 outperforms v1.0 and v3.0 introduces compiler-level optimizations. Profiling information, including flamegraphs, offers insights into the performance characteristics of each version. Regression testing, executed through audiodiff.py, ensures consistency in the output across versions, affirming that the convolution results remain unchanged. The project emphasizes systematic improvement, with all versions and profiling results meticulously documented and accessible in the Git repository.
+The convolve project encompasses multiple versions of a convolution algorithm, each tagged in the Git repository. The initial version (v1.0) implements a straightforward time-domain convolution algorithm. Subsequent versions include algorithm-based optimizations (v2.0), compiler-level optimizations (v3.0), and versions optimized using code tuning, denoted as v4.0, v4.1, v4.2, v4.3, and v4.4. The optimizations lead to significant improvements in execution time, as evidenced by timing results, where v2.0 outperforms v1.0 and v3.0 introduces compiler-level optimizations. Profiling information, including flamegraphs, offers insights into the performance characteristics of each version. Regression testing, executed through `audiodiff.py`, ensures consistency in the output across versions, affirming that the convolution results remain unchanged. The project emphasizes systematic improvement, with all versions and profiling results meticulously documented and accessible in the Git repository.
 
 ## Build and Run Instructions
 
@@ -232,7 +232,7 @@ Flamegraphs are a visualization tool for profiling, allowing us to understand th
 
 ### v4.0
 
-Despite applying code tuning techniques in versions `v4.0-v4.4`, significant improvements may not be apparent in the flamegraphs. This is because the program is already highly optimized due to algorithmic efficiencies and compiler-level optimizations. However, in theory, these code tunings should enhance the program's performance.
+Despite applying code tuning techniques in versions v4.0-v4.4, significant improvements may not be apparent in the flamegraphs. This is because the program is already highly optimized due to algorithmic efficiencies and compiler-level optimizations. However, in theory, these code tunings should enhance the program's performance.
 
 ![flamegraphv4.0](./flamegraphv4.0.svg)
 
