@@ -1,0 +1,215 @@
+commit 7f46512ceec366eb09dd17a49943d474c6d53722
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 18:44:41 2023 -0700
+
+    updated readme
+
+commit 7af1b06cc621efbb99514707c6041e37ee41a4a9
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 18:22:03 2023 -0700
+
+    updated readme
+
+commit d7a6bbe0ed43298d241864dd028a74542d7c881b
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 18:17:27 2023 -0700
+
+    updated readme
+
+commit 00a43c3c247a4d3658c4fe8a13ba60ec258f1326
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 18:15:42 2023 -0700
+
+    updated readme
+
+commit d4a3aaf07f257051da70096781129c1227ebdcee
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 18:02:14 2023 -0700
+
+    updated readme
+
+commit 48213df6d5a18a08c900edbd27e292646ba1b739
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 18:01:03 2023 -0700
+
+    v4.4
+
+commit e2ed31364dca2c45bfec1251fdfd6b83c992663b
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 15:19:54 2023 -0700
+
+    updated readme
+
+commit 8f172f5b7603eb13c76d8e515239c283655db2ef
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 15:05:43 2023 -0700
+
+    v4.3
+
+commit abfaa796fef28964c57fd66c13bab46b224e26d9
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 14:57:35 2023 -0700
+
+    v4.2
+
+commit e8d19144bb258be3dbb90386be018771c193b769
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 14:18:13 2023 -0700
+
+    typo fix
+
+commit f4f48b71ab06c4e9a8dc049fa703e0b0355ed3c9
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Dec 5 14:17:49 2023 -0700
+
+    v4.1
+
+commit 2604c1260939b80944b5a4c7341ea1618eed3fc5
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 14:04:47 2023 -0700
+
+    v4.0
+
+commit ce97d8a63a6a2cdcf565f92a7b2d8a273ee6f354
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 12:09:39 2023 -0700
+
+    optimized audiodiff.py
+
+commit 64cd45ccd620e02e0d1551206832ae64b4da5957
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 11:56:35 2023 -0700
+
+    updated readme
+
+commit a5674cb7f2efe16a965d14dd1d86372c4e895bbc
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 11:54:45 2023 -0700
+
+    fixed typo
+
+commit 4460487655ac99df263d293b78ab3c85087bb244
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 11:54:10 2023 -0700
+
+    v3.0
+
+commit 3fd442159fee7ca842b8b3f0d490cdf3d2aa9965
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 11:20:29 2023 -0700
+
+    added regression testing
+
+commit e38b6d26ea6e37e0bc5ec39a535b3b4cbe0a6481
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Dec 4 10:20:39 2023 -0700
+
+    updated readme
+
+commit 788a8c0c66b13fd370546b905279953d4102e0e7
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Sun Dec 3 21:35:31 2023 -0700
+
+    updated readme
+
+commit 0f282d792e739e303728eba657f6cb1738d0aae0
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Sun Dec 3 21:32:04 2023 -0700
+
+    v2.0
+
+commit 0f3702e3c2a9614d973c950ed4eff7249834c984
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Thu Nov 30 15:01:10 2023 -0700
+
+    implemented fft convolution
+
+commit c8888e276a289bdaa85f58104286f73359705966
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Wed Nov 29 12:46:05 2023 -0700
+
+    v1.0
+
+commit 6bce11deee7692ccb8de2cae49494515415561a0
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Wed Nov 29 12:44:55 2023 -0700
+
+    added v1.0 profile
+
+commit 987697cd76993641db82672af0d43e399a15965e
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Wed Nov 29 11:41:50 2023 -0700
+
+    added fft
+
+commit 93f720ea35295f4c0ba89fae9448ba70343285b7
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Nov 28 15:03:47 2023 -0700
+
+    updated report
+
+commit d62fe89ef075ed51e11dd57e88f0c390f20831ca
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Nov 28 15:00:10 2023 -0700
+
+    added unit test files and resolved errors
+
+commit 1548a39a4c2d088f55cca9ef34037cc2244be8af
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Nov 28 14:40:27 2023 -0700
+
+    added initial tests
+
+commit e27a0a1faf5f33bd83fda13b9c31498e7ca0247c
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Nov 28 14:27:32 2023 -0700
+
+    refactored to be OOP
+
+commit 01863de407918977f60e173d97ccaf41051aa18c
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Tue Nov 28 13:48:30 2023 -0700
+
+    fixed scaling issue
+
+commit ef0488e828503bedc5fa3075e3889203b8e6889e
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Nov 27 19:18:57 2023 -0700
+
+    refactored to OOP
+
+commit 7099fbd60b6e75274b3a18bbe5e5eeb84c394bd0
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Sun Nov 26 21:43:01 2023 -0700
+
+    fixed file handling
+
+commit 0d771e900b17438001961add0f7899f619500c96
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Sun Nov 26 19:55:01 2023 -0700
+
+    added cmake and catch2
+
+commit 4358d5aa00509e7bcf35a9e749d8a42cd2bad8eb
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Thu Nov 23 13:49:23 2023 -0700
+
+    added writeWAV scaling
+
+commit e668b59b039b0e5c51b2891e141dcf94762b1037
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Wed Nov 22 19:03:49 2023 -0700
+
+    added wav header write
+
+commit 9555120b838792e3936e88806ea2d64889150644
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Wed Nov 22 19:00:46 2023 -0700
+
+    refactored as cpp and added readWAV and writeWAV
+
+commit 24b9429c74b6a50320db11a8606f21b63157a767
+Author: Kadin Sayani <me@kadinsayani.dev>
+Date:   Mon Nov 20 16:06:39 2023 -0700
+
+    initial commit
