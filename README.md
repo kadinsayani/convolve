@@ -125,7 +125,7 @@ Y.reserve(nn * 2 + 1);
 
 ## v4.1 - Code Tuning Optimization - Multithreaded Vector Initialization
 
-Vector initialization was optimized by using multithreading the initialization of vectors X and H.
+Vector initialization was optimized by utilizing multithreading during the initialization of vectors X and H.
 
 ```C++
 const size_t numThreads = std::thread::hardware_concurrency();
