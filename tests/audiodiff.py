@@ -8,7 +8,8 @@ output_paths = [
     "./tests/outputv4.0.wav",
     "./tests/outputv4.1.wav",
     "./tests/outputv4.2.wav",
-    "./tests/outputv4.3.wav"
+    "./tests/outputv4.3.wav",
+    "./tests/outputv4.4.wav"
 ]
 
 output_wavs = [wave.open(os.path.normpath(path), "rb")

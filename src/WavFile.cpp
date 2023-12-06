@@ -21,8 +21,9 @@ void WavFile::read(const char *filename) {
   fread(audio.data(), sizeof(short), numSamples, file);
   audioData.resize(numSamples);
 
+  float scalingFactor = 1.0f / 32768.0f;
   for (size_t i = 0; i < numSamples; i++) {
-    audioData[i] = static_cast<float>(audio[i]) / 32768.0f;
+    audioData[i] = static_cast<float>(audio[i]) * scalingFactor;
   }
 
   fclose(file);
