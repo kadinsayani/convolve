@@ -216,13 +216,17 @@ All programs were timed using `time ./build/src/convolve ./build/src/guitar.wav 
 | v4.3    | 1.43s user 0.03s system 100% cpu 1.460 total     |
 | v4.4    | 1.42s user 0.03s system 83% cpu 1.742 total      |
 
-### Profiling
+## Profiling
 
 Flamegraphs were generated for all programs using the command `flamegraph --output flamegraph<version>.svg --root -- ./build/src/convolve ./build/src/guitar.wav ./build/src/big_hall_mono.wav ./tests/output<version>.wav`. 
 
 Flamegraphs are a visualization tool for profiling, allowing us to understand the most resource-intensive parts of a program. Each box in the graph represents a function, with the width indicating the amount of time spent in that function. The y-axis shows the stack depth, with the topmost box being the currently executing function.
 
-#### v2.0
+### v1.0
+
+![flamegraphv1.0](./flamegraphv1.0.svg)
+
+### v2.0
 
 ![flamegraphv2.0](./flamegraphv2.0.svg)
 
@@ -257,7 +261,7 @@ Despite applying code tuning techniques in versions v4.0-v4.4, significant impro
 Regression testing is done by comparing `output.wav` files across versions to verify consistent results from `convolve()`. Execute `python3 ./tests/audiodiff.py` to compare frames from all `convolve()` versions. The output from `audiodiff.py` is shown below.
 
 ```zsh
-❯ python3 /Users/kadinsayani/dev/convolve/tests/audiodiff.py
+❯ python3 ./tests/audiodiff.py
 
 
 ./tests/outputv1.0.wav
